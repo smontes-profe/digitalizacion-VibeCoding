@@ -213,6 +213,70 @@ nav a:hover {
     margin: 0 auto;
 }
 
+/* Comparator Section */
+.comparator-section {
+    padding: 8rem 0;
+}
+
+.comparator-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    margin-bottom: 3rem;
+    background: var(--glass);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+}
+
+.selector-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.custom-select {
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    background: #1e293b;
+    color: white;
+    border: 1px solid var(--primary);
+    font-family: 'Outfit';
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    transition: var(--transition);
+}
+
+.custom-select:hover {
+    background: #334155;
+}
+
+.comparison-stat {
+    text-align: center;
+}
+
+.comparison-stat .label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+}
+
+.comparison-stat .value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-light);
+}
+
+.comp-chart-wrapper {
+    height: 300px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 /* Insight Section */
 .insights-section {
     padding: 8rem 0;
@@ -290,5 +354,10 @@ footer {
     .insight-image-placeholder {
         width: 100%;
         height: 250px;
+    }
+
+    .comparator-controls {
+        flex-direction: column;
+        gap: 2rem;
     }
 }

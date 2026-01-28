@@ -113,6 +113,86 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- COMPARADOR DE AÑOS ---
+    const yearSelect = document.getElementById('year-select');
+    const compPercentage = document.getElementById('comp-percentage');
+    const currentMonthDays = 12; // Enero 2026
+
+    // Generar años 2002-2025 (Excluimos 2026 de la comparación con sí mismo)
+    for (let year = 2025; year >= 2002; year--) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+    }
+
+    // Inicializar Chart Comparativo
+    const compCtx = document.getElementById('compChart').getContext('2d');
+    let compChart;
+
+    function updateComparison(selectedYear) {
+        // Simulamos un valor aleatorio coherente para el mes de enero del año seleccionado (entre 2 y 20)
+        // Para que sea determinista en esta demo, usaremos una semilla basada en el año
+        const seededRain = Math.floor(((selectedYear * 13) % 18) + 3);
+        const percentDiff = (((currentMonthDays - seededRain) / seededRain) * 100).toFixed(1);
+
+        compPercentage.textContent = (percentDiff > 0 ? '+' : '') + percentDiff + '%';
+        compPercentage.style.color = percentDiff > 0 ? '#10b981' : '#f43f5e';
+
+        const data = {
+            labels: [selectedYear, '2026'],
+            datasets: [{
+                label: 'Días de Lluvia (Enero)',
+                data: [seededRain, currentMonthDays],
+                backgroundColor: [
+                    'rgba(255, 255, 255, 0.1)',
+                    '#2563eb'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 255, 0.3)',
+                    '#60a5fa'
+                ],
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        };
+
+        if (compChart) {
+            compChart.destroy();
+        }
+
+        compChart = new Chart(compCtx, {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#64748b' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#fff', font: { weight: 'bold' } }
+                    }
+                }
+            }
+        });
+    }
+
+    // Event listener para cambio de año
+    yearSelect.addEventListener('change', (e) => {
+        updateComparison(e.target.value);
+    });
+
+    // Carga inicial (2025)
+    updateComparison(2025);
+
     // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
