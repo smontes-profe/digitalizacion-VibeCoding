@@ -14,3 +14,6 @@
 ######
 ###PROMPT 2###
 # Quiero añadir una sección más en el menú superior para elegir un año entre 2026 y 2002 y que compare los días de lluvia del mes actual del año ctual con el mes actual del año seleccionado. De nuevo con una gráfica apropiada y mostrando porcentajes.
+######
+###PROMPT 3###
+# Quiero modificar el comparador para que compare litros de lluvia en vez de días de lluvia.
