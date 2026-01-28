@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Pluviométrico 2026 | Comparativa Histórica</title>
+    <meta name="description" content="Comparativa interactiva de los días de lluvia en 2026 frente a la media de los últimos 25 años.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 19.07-1.41-1.41"/><path d="M12 22v-2"/><path d="m6.34 17.66-1.41 1.41"/><path d="M2 12h2"/><path d="m7.76 7.76-1.41 1.41"/><path d="M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/></svg>
+                <span>PluviMetrics</span>
+            </div>
+            <ul>
+                <li><a href="#stats">Estadísticas</a></li>
+                <li><a href="#charts">Gráficas</a></li>
+                <li><a href="#about">Resumen</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <h1 class="fade-in">Crónica de la Lluvia 2026</h1>
+                <p class="fade-in delay-1">Explora cómo se compara el año actual con los registros históricos de los últimos 25 años. Una mirada profunda a nuestros cielos.</p>
+                <div class="hero-btns fade-in delay-2">
+                    <a href="#stats" class="btn btn-primary">Ver Datos Actuales</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="stats" class="stats-section container">
+            <div class="section-title">
+                <h2>Resumen Rápido</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">💧</div>
+                    <div class="stat-info">
+                        <h3>Días Lluvia 2026</h3>
+                        <p class="stat-value" id="days-2026">12</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <h3>Media Histórica</h3>
+                        <p class="stat-value" id="avg-historical">18.5</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📉</div>
+                    <div class="stat-info">
+                        <h3>Diferencia</h3>
+                        <p class="stat-value" id="diff-value">-35%</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="charts" class="charts-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Comparativa Visual</h2>
+                    <p>Días acumulados por mes vs. media de los últimos 25 años</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="rainfallChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="insights" class="insights-section container">
+            <div class="insight-box">
+                <div class="insight-content">
+                    <h3>¿Qué nos dicen los datos?</h3>
+                    <p>Los primeros meses de 2026 muestran una tendencia ligeramente inferior a la media histórica. Esto podría indicar un ciclo más seco de lo habitual, aunque las previsiones para primavera sugieren una recuperación.</p>
+                </div>
+                <div class="insight-image-placeholder" id="insight-img">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 PluviMetrics - Análisis de Datos Meteorológicos</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
