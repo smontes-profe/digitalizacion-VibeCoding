@@ -156,6 +156,21 @@ nav a:hover {
     border-radius: 2px;
 }
 
+.location-selector {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.location-selector label {
+    font-size: 1rem;
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
