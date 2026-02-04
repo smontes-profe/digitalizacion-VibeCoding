@@ -200,11 +200,48 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`📊 Media histórica (5 años): ${avgCurrentMonth.toFixed(1)} L/m²`);
         console.log(`📊 Diferencia: ${diff}%`);
 
+        // Actualizar mensaje de insights
+        updateInsightMessage(diff, currentProvince, currentMonth);
+
         // Actualizar gráfica principal
         updateMainChart(historicalAvg, currentYearDataForChart);
 
         // Inicializar comparador de años
         initYearComparator(province, currentYear);
+    }
+
+    // Generar mensaje dinámico de insights basado en los datos
+    function updateInsightMessage(diffPercent, province, currentMonth) {
+        const monthName = months[currentMonth];
+        const insightText = document.getElementById('insight-text');
+
+        if (!insightText) return;
+
+        let message = '';
+        const diff = parseFloat(diffPercent);
+
+        // Extremadamente lluvioso (más del 50% por encima de la media)
+        if (diff > 50) {
+            message = `¡${province} está experimentando un período excepcionalmente lluvioso! Con un ${diff > 0 ? '+' : ''}${diff}% respecto a la media histórica, este ${monthName} está siendo uno de los más húmedos de los últimos años. Las precipitaciones acumuladas superan significativamente lo esperado para esta época del año.`;
+        }
+        // Más lluvioso (entre 15% y 50% por encima)
+        else if (diff > 15) {
+            message = `${province} registra precipitaciones por encima de lo habitual este ${monthName}. Con un ${diff > 0 ? '+' : ''}${diff}% más que la media de los últimos 5 años, estamos ante un período notablemente más húmedo de lo esperado. Las lluvias han sido más frecuentes e intensas que en años anteriores.`;
+        }
+        // Similar a la media (entre -15% y +15%)
+        else if (diff >= -15) {
+            message = `Las precipitaciones en ${province} se mantienen dentro de los valores normales para ${monthName}. Con una variación del ${diff > 0 ? '+' : ''}${diff}% respecto a la media histórica, los niveles de lluvia son similares a los registrados en años anteriores, lo que indica un comportamiento meteorológico típico para esta época.`;
+        }
+        // Poco lluvioso (entre -15% y -40%)
+        else if (diff >= -40) {
+            message = `${province} presenta un déficit de precipitaciones este ${monthName}. Con un ${diff}% menos que la media de los últimos 5 años, las lluvias han sido más escasas de lo habitual. Aunque no es una situación extrema, se observa una tendencia más seca que podría requerir seguimiento en los próximos meses.`;
+        }
+        // De los menos lluviosos (menos del -40%)
+        else {
+            message = `${province} atraviesa uno de los períodos más secos de los últimos años. Con un ${diff}% por debajo de la media histórica, este ${monthName} destaca por la escasez de precipitaciones. Los niveles de lluvia están significativamente por debajo de lo esperado, lo que podría tener implicaciones para los recursos hídricos de la región.`;
+        }
+
+        insightText.textContent = message;
     }
 
     // Actualizar gráfica principal
@@ -317,6 +354,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const yearSelect = document.getElementById('year-select');
         yearSelect.innerHTML = '';
 
+        // Actualizar el texto descriptivo con la fecha actual
+        const now = new Date();
+        const dateFormatter = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long' });
+        const currentDateFormatted = dateFormatter.format(now);
+        const descriptionElement = document.getElementById('comparator-description');
+        if (descriptionElement) {
+            descriptionElement.textContent = `Compara la precipitación (l/m²) acumulada hasta el ${currentDateFormatted} con la misma fecha de otros años`;
+        }
+
         // Generar años (últimos 10 años)
         for (let year = currentYear - 1; year >= currentYear - 10; year--) {
             const option = document.createElement('option');
@@ -336,25 +382,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Actualizar comparación de años
     async function updateYearComparison(province, selectedYear, currentYear) {
-        const currentMonth = new Date().getMonth();
-        const currentDay = new Date().getDate();
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentDay = now.getDate();
         const monthName = months[currentMonth];
 
-        console.log(`📊 Comparando ${monthName} ${selectedYear} vs ${currentYear}`);
+        // Formatear la fecha actual como "4 de febrero"
+        const dateFormatter = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long' });
+        const currentDateFormatted = dateFormatter.format(now);
 
-        // Obtener datos del año seleccionado (mes completo)
+        console.log(`📊 Comparando precipitación hasta el ${currentDateFormatted}: ${selectedYear} vs ${currentYear}`);
+
+        // Obtener datos del año seleccionado (desde 1 de enero hasta la fecha actual)
         const selectedYearData = await fetchRainfallData(
             province.lat,
             province.lon,
-            `${selectedYear}-${String(currentMonth + 1).padStart(2, '0')}-01`,
-            `${selectedYear}-${String(currentMonth + 1).padStart(2, '0')}-${new Date(selectedYear, currentMonth + 1, 0).getDate()}`
+            `${selectedYear}-01-01`,
+            `${selectedYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(currentDay).padStart(2, '0')}`
         );
 
-        // Obtener datos del año actual (hasta hoy)
+        // Obtener datos del año actual (desde 1 de enero hasta hoy)
         const currentYearData = await fetchRainfallData(
             province.lat,
             province.lon,
-            `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-01`,
+            `${currentYear}-01-01`,
             `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(currentDay).padStart(2, '0')}`
         );
 
@@ -363,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Calcular totales
+        // Calcular totales (precipitación acumulada desde el 1 de enero)
         let selectedYearPrecip = 0;
         let currentYearPrecip = 0;
 
@@ -384,12 +435,17 @@ document.addEventListener('DOMContentLoaded', () => {
         compPercentage.textContent = (percentDiff > 0 ? '+' : '') + percentDiff + '%';
         compPercentage.style.color = percentDiff > 0 ? '#10b981' : '#f43f5e';
 
-        console.log(`📊 ${selectedYear}: ${selectedYearPrecip.toFixed(1)} L/m²`);
-        console.log(`📊 ${currentYear}: ${currentYearPrecip.toFixed(1)} L/m²`);
+        console.log(`📊 ${selectedYear} (hasta ${currentDateFormatted}): ${selectedYearPrecip.toFixed(1)} L/m²`);
+        console.log(`📊 ${currentYear} (hasta ${currentDateFormatted}): ${currentYearPrecip.toFixed(1)} L/m²`);
         console.log(`📊 Diferencia: ${percentDiff}%`);
 
-        // Actualizar gráfica comparativa
-        updateComparisonChart(selectedYear, currentYear, selectedYearPrecip, currentYearPrecip);
+        // Actualizar gráfica comparativa con etiquetas más descriptivas
+        updateComparisonChart(
+            `${selectedYear}\n(hasta ${currentDateFormatted})`,
+            `${currentYear}\n(hasta hoy)`,
+            selectedYearPrecip,
+            currentYearPrecip
+        );
     }
 
     // Actualizar gráfica de comparación

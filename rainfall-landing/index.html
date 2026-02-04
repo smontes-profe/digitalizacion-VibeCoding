@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Análisis Pluviométrico 2026 | Comparativa Histórica</title>
     <meta name="description"
-        content="Comparativa interactiva de los días de lluvia en 2026 frente a la media de los últimos 25 años.">
+        content="Comparativa interactiva de la lluvia en 2026 frente a la media de los últimos 25 años.">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,7 +69,7 @@
                 <div class="stat-card">
                     <div class="stat-icon">💧</div>
                     <div class="stat-info">
-                        <h3>Días Lluvia 2026</h3>
+                        <h3>Lluvia 2026</h3>
                         <p class="stat-value" id="days-2026">12</p>
                     </div>
                 </div>
@@ -104,8 +104,9 @@
 
         <section id="comparator" class="comparator-section container">
             <div class="section-title">
-                <h2>Explorador Histórico (Litros)</h2>
-                <p>Compara la precipitación (l/m²) del mes actual (Enero 2026) con cualquier año desde 2002</p>
+                <h2>Explorador Histórico</h2>
+                <p id="comparator-description">Compara la precipitación (l/m²) acumulada hasta hoy con la misma fecha de
+                    otros años</p>
             </div>
 
             <div class="comparator-controls">
@@ -132,9 +133,7 @@
             <div class="insight-box">
                 <div class="insight-content">
                     <h3>¿Qué nos dicen los datos?</h3>
-                    <p>Los primeros meses de 2026 muestran una tendencia ligeramente inferior a la media histórica. Esto
-                        podría indicar un ciclo más seco de lo habitual, aunque las previsiones para primavera sugieren
-                        una recuperación.</p>
+                    <p id="insight-text">Cargando análisis...</p>
                 </div>
                 <div class="insight-image-placeholder" id="insight-img">
                 </div>
