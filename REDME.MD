@@ -25,7 +25,7 @@
 
 ## Provincias Disponibles
 
-Sevilla (por defecto), Madrid, Barcelona, Valencia, Málaga, Bilbao, Zaragoza, Alicante, Murcia, A Coruña, Granada, Santander, Toledo, Salamanca, Cádiz
+Sevilla (por defecto), Madrid, Barcelona, Valencia, Málaga, Bilbao, Zaragoza, Alicante, Murcia, A Coruña, Granada, Santander, Toledo, Salamanca, Cádiz, Huelva
 
 ## Cómo Ejecutar
 

@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Santander': { lat: 43.4623, lon: -3.8099, name: 'Santander' },
         'Toledo': { lat: 39.8628, lon: -4.0273, name: 'Toledo' },
         'Salamanca': { lat: 40.9701, lon: -5.6635, name: 'Salamanca' },
-        'Cádiz': { lat: 36.5271, lon: -6.2886, name: 'Cádiz' }
+        'Cádiz': { lat: 36.5271, lon: -6.2886, name: 'Cádiz' },
+        'Huelva': { lat: 37.2614, lon: -6.9447, name: 'Huelva' }
     };
 
     const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
